@@ -1,0 +1,512 @@
+1. AWS VPC - Amazon Virtual Private Cloud
+2. Amazon Virtual Private Cloud (Amazon VPC) enables you to launch AWS resources into a virtual network that you've defined. 
+3. This virtual network closely resembles a traditional network that you'd operate in your own data center.
+4. It is available with the benefits of using the scalable infrastructure of AWS.
+5. Amazon VPC is the networking layer for Amazon EC2.
+6. Virtual private cloud (VPC) — A virtual network dedicated to your AWS account.
+7. Subnet — A range of IP addresses in your VPC.
+8. Route table — A set of rules, called routes, that are used to determine where network traffic is directed.
+9. Internet gateway — A gateway that you attach to your VPC to enable communication between resources in your VPC and the internet.
+10. VPC endpoint — Enables you to privately connect your VPC to supported AWS services and VPC endpoint services powered by PrivateLink without requiring an internet gateway, NAT device, VPN connection, or AWS Direct Connect connection.
+11. Instances in your VPC do not require public IP addresses to communicate with resources in the service. 
+12. Traffic between your VPC and the other service does not leave the Amazon network.
+13. CIDR block —Classless Inter-Domain Routing
+14. An internet protocol address allocation and route aggregation methodology.
+15. You can create, access, and manage your VPCs using any of the following interfaces:
+16. AWS Management Console — Provides a web interface that you can use to access your VPCs.
+17. AWS Command Line Interface (AWS CLI) — Provides commands for a broad set of AWS services, including Amazon VPC, and is supported on Windows, Mac, and Linux.
+18. AWS SDKs — Provides language-specific APIs and takes care of many of the connection details.
+19. They are calculating signatures, handling request retries, and error handling.
+20. Query API — Provides low-level API actions that you call using HTTPS requests. 
+21. Using the Query API is the most direct way to access Amazon VPC, but it requires that your application handle low-level details.
+22. They are generating the hash to sign the request, and error handling.
+23. There's no additional charge for using a VPC.
+24. There are charges for some VPC components, such as NAT gateways, Reachability Analyzer, and traffic mirroring.
+25. There are quotas on the number of Amazon VPC components that you can provision.
+26. You can request an increase for some of these quotas. 
+27. A virtual private cloud (VPC) is a virtual network dedicated to your AWS account. 
+28. It is logically isolated from other virtual networks in the AWS Cloud. 
+29. You can launch your AWS resources, such as Amazon EC2 instances, into your VPC. 
+30. You can specify an IP address range for the VPC, add subnets, associate security groups, and configure route tables.
+31. A subnet is a range of IP addresses in your VPC. 
+32. You can launch AWS resources into a specified subnet. 
+33. Use a public subnet for resources that must be connected to the internet, and a private subnet for resources that won't be connected to the internet .
+34. To protect the AWS resources in each subnet, you can use multiple layers of security, including security groups and network access control lists (ACL).
+35. You can optionally associate an IPv6 CIDR block with your VPC, and assign IPv6 addresses to the instances in your VPC.
+36. If your account was created after 2013-12-04, it comes with a default VPC that has a default subnet in each Availability Zone.
+37. A default VPC has the benefits of the advanced features provided by EC2-VPC, and is ready for you to use.
+38. If you have a default VPC and don't specify a subnet when you launch an instance, the instance is launched into your default VPC. 
+39. You can launch instances into your default VPC without needing to know anything about Amazon VPC.
+40. You can also create your own VPC, and configure it as you need.
+41. This is known as a nondefault VPC.
+42. Subnets that you create in your nondefault VPC and additional subnets that you create in your default VPC are called nondefault subnets.
+43. A route table contains a set of rules, called routes,
+44. That are used to determine where network traffic from your VPC is directed. 
+45. You can explicitly associate a subnet with a particular route table.
+46. Otherwise, the subnet is implicitly associated with the main route table.
+47. Each route in a route table specifies the range of IP addresses 
+48. Where you want the traffic to go (the destination) and the gateway, network interface, or connection through which to send the traffic (the target).
+49. You control how the instances that you launch into a VPC access resources outside the VPC.
+50. Your default VPC includes an internet gateway, and each default subnet is a public subnet.
+Each instance that you launch into a default subnet has a private IPv4 address and a public IPv4 address.
+51. These instances can communicate with the internet through the internet gateway.
+52. An internet gateway enables your instances to connect to the internet through the Amazon EC2 network edge.
+53. By default, each instance that you launch into a nondefault subnet has a private IPv4 address, but no public IPv4 address, unless you specifically assign one at launch, or you modify the subnet's public IP address attribute.
+54. These instances can communicate with each other, but can't access the internet.
+55. You can enable internet access for an instance launched into a nondefault subnet by attaching an internet gateway to its VPC (if its VPC is not a default VPC) and associating an Elastic IP address with the instance.
+56. Alternatively, to allow an instance in your VPC to initiate outbound connections to the internet but prevent unsolicited inbound connections from the internet, you can use a network address translation (NAT) device. 
+57. NAT maps multiple private IPv4 addresses to a single public IPv4 address.
+58. You can configure the NAT device with an Elastic IP address and connect it to the internet through an internet gateway. 
+59. This makes it possible for an instance in a private subnet to connect to the internet through the NAT device, routing traffic from the instance to the internet gateway and any responses to the instance.
+60. If you associate an IPv6 CIDR block with your VPC and assign IPv6 addresses to your instances, instances can connect to the internet over IPv6 through an internet gateway.
+61. Alternatively, instances can initiate outbound connections to the internet over IPv6 using an egress-only internet gateway.
+62. IPv6 traffic is separate from IPv4 traffic; your route tables must include separate routes for IPv6 traffic.
+63. You can optionally connect your VPC to your own corporate data center using an IPsec AWS Site-to-Site VPN connection, making the AWSCloud an extension of your data center.
+64. A Site-to-Site VPN connection consists of two VPN tunnels between a virtual private gateway or transit gateway on the AWSside, and a customer gateway device located in your data center.
+65. A customer gateway device is a physical device or software appliance that you configure on your side of the Site-to-Site VPN connection.
+66. You can create a VPC peering connection between two VPCs that enables you to route traffic between them privately.
+67. Instances in either VPC can communicate with each other as if they are within the same network.
+68. You can also create a transit gateway and use it to interconnect your VPCs and on-premises networks. 
+69. The transit gateway acts as a Regional virtual router for traffic flowing between its attachments, which can include VPCs, VPN connections, AWS Direct Connect gateways, and transit gateway peering connections.
+70. AWS provides a high-performance, and low-latency private global network that delivers a secure cloud computing environment to support your networking needs.
+71. AWS Regions are connected to multiple Internet Service Providers (ISPs) as well as to a private global network backbone, which provides improved network performance for cross-Region traffic sent by customers.
+72. Traffic that is in an Availability Zone, or between Availability Zones in all Regions, routes over the AWS private global network.
+73. Traffic that is between Regions always routes over the AWS private global network, except for China Regions.
+74. Network packet loss can be caused by a number of factors, including network flow collisions, lower level (Layer 2) errors, and other network failures. 
+75. We engineer and operate our networks to minimize packet loss. 
+76. We measure packet-loss rate (PLR) across the global backbone that connects the AWS Regions. 
+77. We operate our backbone network to target a p99 of the hourly PLR of less than 0.0001%.
+78. he original release of Amazon EC2 supported a single, flat network that's shared with other customers called the EC2-Classic platform.
+79. Earlier AWS accounts still support this platform, and can launch instances into either EC2-Classic or a VPC. 
+80. Accounts created after 2013-12-04 support EC2-VPC only. 
+81. To get started using Amazon VPC, you can create a nondefault VPC. 
+82. The following steps describe how to use the Amazon VPC wizard to create a nondefault VPC with a public subnet, which is a subnet that has access to the internet through an internet gateway. 
+83. You can then launch an instance into the subnet and connect to it.
+84. Before you can use Amazon VPC for the first time, you must sign up for Amazon Web Services (AWS). 
+85. When you sign up, your AWS account is automatically signed up for all services in AWS, including Amazon VPC.
+86. If you want to use a Local Zone for your VPC, create a VPC, and then create a subnet in the Local Zone. 
+87. Step 1: Create the VPC
+88. In this step, you'll use the Amazon VPC wizard in the Amazon VPC console to create a VPC. 
+89. The wizard performs the following steps for you:
+90. Creates a VPC with a /16 IPv4 CIDR block (a network with 65,536 private IP addresses).
+91. Attaches an internet gateway to the VPC.
+92. Creates a size /24 IPv4 subnet (a range of 256 private IP addresses) in the VPC.
+93. Creates a custom route table, and associates it with your subnet, so that traffic can flow between the subnet and the internet gateway.
+94. To create a VPC using the Amazon VPC Wizard
+95. Open the Amazon VPC console at https://console.aws.amazon.com/vpc/.
+96. In the navigation bar, on the top-right, take note of the AWS Region in which you'll be creating the VPC. 
+97. Ensure that you continue working in the same Region for the rest of this exercise, as you cannot launch an instance into your VPC from a different Region.
+98. In the navigation pane, choose VPC dashboard. From the dashboard, choose Launch VPC Wizard.
+99. Choose VPC with a Single Public Subnet, and then choose Select.
+100. On the configuration page, enter a name for your VPC in the VPC name field;
+101. For example, my-vpc, and enter a name for your subnet in the Subnet name field.
+102. This helps you to identify the VPC and subnet in the Amazon VPC console after you've created them.
+103. For this exercise, leave the rest of the configuration settings on the page, and choose Create VPC.
+104. A status window shows the work in progress. 
+105. When the work completes, choose OK to close the status window.
+106. The Your VPCs page displays your default VPC and the VPC that you just created. 
+107. The VPC that you created is a nondefault VPC, therefore the Default VPC column displays No.
+108. After you've created the VPC, you can view information about the subnet, the internet gateway, and the route tables. 
+109. The VPC that you created has two route tables — a main route table that all VPCs have by default, and a custom route table that was created by the wizard. 
+110. The custom route table is associated with your subnet, which means that the routes in that table determine how the traffic for the subnet flows.
+111. If you add a new subnet to your VPC, it uses the main route table by default.
+112. To view information about your VPC:
+113. Open the Amazon VPC console at https://console.aws.amazon.com/vpc/.
+114. In the navigation pane, choose Your VPCs. 
+115. Take note of the name and the ID of the VPC that you created (look in the Name and VPC ID columns). 
+116. You will use this information to identify the components that are associated with your VPC.
+117. In the navigation pane, choose Subnets.
+118. The console displays the subnet that was created when you created your VPC.
+119. You can identify the subnet by its name in Name column, or you can use the VPC information that you obtained in the previous step and look in the VPC column.
+120. In the navigation pane, choose Internet Gateways.
+121. You can find the internet gateway that's attached to your VPC by looking at the VPC column, which displays the ID and the name (if applicable) of the VPC.
+122. In the navigation pane, choose Route Tables. There are two route tables associated with the VPC. 
+123. Select the custom route table (the Main column displays No), and then choose the Routes tab to display the route information in the details pane:
+124. The first row in the table is the local route, which enables instances within the VPC to communicate.
+125. This route is present in every route table by default, and you can't remove it.
+126. The second row shows the route that the Amazon VPC wizard added to enable traffic destined for the internet (0.0.0.0/0) to flow from the subnet to the internet gateway.
+127. Select the main route table. The main route table has a local route, but no other routes.
+128. Step 2: Launch an instance into your VPC
+129. When you launch an EC2 instance into a VPC, you must specify the subnet in which to launch the instance.
+130. In this case, you'll launch an instance into the public subnet of the VPC you created. 
+131. You'll use the Amazon EC2 launch wizard in the Amazon EC2 console to launch your instance.
+132. To launch an EC2 instance into a VPC
+133. Open the Amazon EC2 console at https://console.aws.amazon.com/ec2/.
+134. In the navigation bar, on the top-right, ensure that you select the same Region in which you created your VPC.
+135. From the dashboard, choose Launch Instance.
+136. On the first page of the wizard, choose the AMI that you want to use. For this exercise, choose an Amazon Linux AMI or a Windows AMI.
+137. On the Choose an Instance Type page, you can select the hardware configuration and size of the instance to launch.
+138. By default, the wizard selects the first available instance type based on the AMI you selected. 
+139. You can leave the default selection, and then choose Next: Configure Instance Details.
+140. On the Configure Instance Details page, select the VPC that you created from the Network list, and the subnet from the Subnet list.
+141. Leave the rest of the default settings, and go through the next pages of the wizard until you get to the Add Tags page.
+142. On the Add Tags page, you can tag your instance with a Name tag; for example Name=MyWebServer.
+143. This helps you to identify your instance in the Amazon EC2 console after you've launched it. Choose Next: Configure Security Group when you are done.
+144. On the Configure Security Group page, the wizard automatically defines the launch-wizard-x security group to allow you to connect to your instance. Choose Review and Launch.
+145. On the Review Instance Launch page, choose Launch.
+146. In the Select an existing key pair or create a new key pair dialog box, you can choose an existing key pair, or create a new one.
+147. If you create a new key pair, ensure that you download the file and store it in a secure location. 
+148. You'll need the contents of the private key to connect to your instance after it's launched.
+149. To launch your instance, select the acknowledgment check box, and then choose Launch Instances.
+150. On the confirmation page, choose View Instances to view your instance on the Instances page.
+151.  Select your instance, and view its details in the Description tab.
+152. The Private IPs field displays the private IP address that's assigned to your instance from the range of IP addresses in your subnet.
+153. Step 3: Assign an Elastic IP address to your instance
+154. In the previous step, you launched your instance into a public subnet — a subnet that has a route to an internet gateway. 
+155. However, the instance in your subnet also needs a public IPv4 address to be able to communicate with the internet.
+156. By default, an instance in a nondefault VPC is not assigned a public IPv4 address. 
+157. In this step, you'll allocate an Elastic IP address to your account, and then associate it with your instance.
+158. To allocate and assign an Elastic IP address
+159. Open the Amazon VPC console at https://console.aws.amazon.com/vpc/.
+160. In the navigation pane, choose Elastic IPs.
+161. Choose Allocate new address, and then Allocate.
+162. Select the Elastic IP address from the list, choose Actions, and then choose Associate Address.
+163. For Resource type, ensure that Instance is selected.
+164. Choose your instance from the Instance list. 
+165. Choose Associate when you're done.
+166. Your instance is now accessible from the internet.
+167. You can connect to your instance through its Elastic IP address using SSH or Remote Desktop from your home network.
+168. Step 4: Clean up
+169. You can choose to continue using your instance in your VPC, or if you do not need the instance, you can terminate it and release its Elastic IP address to avoid incurring charges for them.
+170. You can also delete your VPC — note that you are not charged for the VPC and VPC components created in this exercise (such as the subnets and route tables).
+171. Before you can delete a VPC, you must terminate any instances that are running in the VPC.
+172. You can then delete the VPC and its components using the VPC console.
+173. To terminate your instance, release your Elastic IP address, and delete your VPC
+174. Open the Amazon EC2 console at https://console.aws.amazon.com/ec2/.
+175. In the navigation pane, choose Instances.
+176. Select your instance, choose Actions, then Instance State, and then select Terminate.
+177. In the dialog box, expand the Release attached Elastic IPs section, and select the check box next to the Elastic IP address. Choose Yes, Terminate.
+178. Open the Amazon VPC console at https://console.aws.amazon.com/vpc/.
+179. In the navigation pane, choose Your VPCs.
+180. Select the VPC, choose Actions, and then choose Delete VPC.
+181. When prompted for confirmation, choose Delete VPC.
+182. After you create a nondefault VPC, you might want to do the following:
+183. Add more subnets to your VPC. For more information, see Create a subnet in your VPC.
+184. Enable IPv6 support for your VPC and subnets. For more information, see Associate an IPv6 CIDR block with your VPC and Associate an IPv6 CIDR block with your subnet.
+185. Enable instances in a private subnet to access the internet. For more information, see NAT devices for your VPC.
+186. The following steps describe how to create a nondefault VPC that supports IPv6 addressing.
+187. To complete this exercise, do the following:
+188. Create a nondefault VPC with an IPv6 CIDR block and a single public subnet. 
+189. Subnets enable you to group instances based on your security and operational needs.
+190. A public subnet is a subnet that has access to the internet through an internet gateway.
+191. Create a security group for your instance that allows traffic only through specific ports.
+192. Launch an Amazon EC2 instance into your subnet, and associate an IPv6 address with your instance during launch.
+193. An IPv6 address is globally unique, and allows your instance to communicate with the internet.
+194. You can request an IPv6 CIDR block for the VPC. 
+195. When you select this option, you can set the network border group, which is the location from which we advertise the IPv6 CIDR block.
+196. Setting the network border group limits the CIDR block to this group.
+197. If you want to use a Local Zone for your VPC, create a VPC, and then create a subnet in the Local Zone. 
+198. Step 1: Create the VPC
+199. In this step, you use the Amazon VPC wizard in the Amazon VPC console to create a VPC. By default, the wizard performs the following steps for you:
+200. Creates a VPC with a /16 IPv4 CIDR block and associates a /56 IPv6 CIDR block with the VPC. 
+201. For more information, see Your VPC. 
+202. The size of the IPv6 CIDR block is fixed (/56) and the range of IPv6 addresses is automatically allocated from Amazon's pool of IPv6 addresses (you cannot select the range yourself).
+203. Attaches an internet gateway to the VPC. For more information about internet gateways, see Internet gateways.
+204. Creates a subnet with an /24 IPv4 CIDR block and a /64 IPv6 CIDR block in the VPC. 
+205. The size of the IPv6 CIDR block is fixed (/64).
+206. Creates a custom route table, and associates it with your subnet, so that traffic can flow between the subnet and the internet gateway.
+207. Associates an IPv6 Amazon-provided CIDR block with a network border group.
+208. To create a VPC in the default Availability Zone
+209. Open the Amazon VPC console at https://console.aws.amazon.com/vpc/.
+210. In the navigation bar, on the top-right, take note of the Region in which you'll be creating the VPC.
+211. Ensure that you continue working in the same Region for the rest of this exercise, as you cannot launch an instance into your VPC from a different Region. 
+212. In the navigation pane, choose VPC dashboard and choose Launch VPC Wizard.
+213. Choose the option for the configuration you want to implement, for example, VPC with a Single Public Subnet, and then choose Select.
+214. On the configuration page, enter a name for your VPC for VPC name; for example, my-vpc, and enter a name for your subnet for Subnet name. 
+215.  This helps you to identify the VPC and subnet in the Amazon VPC console after you've created them.
+216. For IPv4 CIDR block, you can leave the default setting (10.0.0.0/16), or specify your own. 
+217. For IPv6 CIDR block, choose Amazon-provided IPv6 CIDR block.
+218. For Public subnet's IPv4 CIDR, leave the default setting, or specify your own. 
+219.  For Public subnet's IPv6 CIDR, choose Specify a custom IPv6 CIDR.
+220.  You can leave the default hexadecimal pair value for the IPv6 subnet (00).
+221. Leave the rest of the default configurations on the page, and choose Create VPC.
+222. A status window shows the work in progress. When the work completes, choose OK to close the status window.
+223. The Your VPCs page displays your default VPC and the VPC that you just created.
+224. To create a VPC in a Local Zone
+225. Open the Amazon VPC console at https://console.aws.amazon.com/vpc/.
+226. In the navigation bar, on the top-right, take note of the Region in which you'll be creating the VPC.
+227. Ensure that you continue working in the same Region for the rest of this exercise, as you cannot launch an instance into your VPC from a different Region.
+228. In the navigation pane, choose VPC dashboard and choose Launch VPC Wizard.
+229. Choose the option for the configuration you want to implement, for example, VPC with a Single Public Subnet, and then choose Select.
+230. On the configuration page, enter a name for your VPC for VPC name; for example, my-vpc, and enter a name for your subnet for Subnet name. 
+231. This helps you to identify the VPC and subnet in the Amazon VPC console after you've created them.
+232. (For IPv4 CIDR block, specify the CIDR block
+233. For IPv6 CIDR block, choose Amazon-provided IPv6 CIDR block.
+234. For Network Border Group, choose the group from where AWS advertises the IP addresses
+235. Leave the rest of the default configurations on the page, and choose Create VPC.
+236. A status window shows the work in progress. When the work completes, choose OK to close the status window.
+237. The Your VPCs page displays your default VPC and the VPC that you just created
+238. View information about your VPC
+239. After you've created the VPC, you can view information about the subnet, internet gateway, and route tables.
+240. The VPC that you created has two route tables — a main route table that all VPCs have by default, and a custom route table that was created by the wizard. 
+241. The custom route table is associated with your subnet, which means that the routes in that table determine how the traffic for the subnet flows. 
+242. If you add a new subnet to your VPC, it uses the main route table by default.
+243. To view information about your VPC
+244. Open the Amazon VPC console at https://console.aws.amazon.com/vpc/.
+245. In the navigation pane, choose Your VPCs. Take note of the name and the ID of the VPC that you created (look in the Name and VPC ID columns). 
+246. You use this information to identify the components that are associated with your VPC.
+247. When you use Local Zones, the IPv6 (Network Border Group) entry indicates the VPC network border group (for example, us-west-2-lax-1 ).
+248. In the navigation pane, choose Subnets.
+249. The console displays the subnet that was created when you created your VPC. 
+250. You can identify the subnet by its name in Name column, or you can use the VPC information that you obtained in the previous step and look in the VPC column.
+251. In the navigation pane, choose Internet Gateways. 
+252. You can find the internet gateway that's attached to your VPC by looking at the VPC column, which displays the ID and the name (if applicable) of the VPC.
+253. In the navigation pane, choose Route Tables. 
+254.  There are two route tables associated with the VPC. 
+255.  Select the custom route table (the Main column displays No), and then choose the Routes tab to display the route information in the details pane:
+256. The first two rows in the table are the local routes, which enable instances within the VPC to communicate over IPv4 and IPv6. You can't remove these routes.
+257. The next row shows the route that the Amazon VPC wizard added to enable traffic destined for an IPv4 address outside the VPC (0.0.0.0/0) to flow from the subnet to the internet gateway.
+258 The next row shows the route that enables traffic destined for an IPv6 address outside the VPC (::/0) to flow from the subnet to the internet gateway.
+259. Select the main route table. The main route table has a local route, but no other routes.
+260. Step 2: Create a security group
+261. A security group acts as a virtual firewall to control the traffic for its associated instances. \
+262. To use a security group, add the inbound rules to control incoming traffic to the instance, and outbound rules to control the outgoing traffic from your instance.
+263. To associate a security group with an instance, specify the security group when you launch the instance.
+264. Your VPC comes with a default security group.
+265. Any instance not associated with another security group during launch is associated with the default security group.
+266. In this exercise, you create a new security group, WebServerSG, and specify this security group when you launch an instance into your VPC.
+267. Create your WebServerSG security group
+268. You can create your security group using the Amazon VPC console.
+269. To create the WebServerSG security group and add rules
+270. Open the Amazon VPC console at https://console.aws.amazon.com/vpc/.
+271. In the navigation pane, choose Security Groups, Create Security Group.
+272. For Group name, enter WebServerSG as the name of the security group and provide a description.
+273. You can optionally use the Name tag field to create a tag for the security group with a key of Name and a value that you specify.
+274. Select the ID of your VPC from the VPC menu and choose Yes, Create.
+275. Select the WebServerSG security group that you just created (you can view its name in the Group Name column).
+276. On the Inbound Rules tab, choose Edit and add rules for inbound traffic as follows:
+277. For Type, choose HTTP and enter ::/0 in the Source field.
+278. Choose Add another rule, For Type, choose HTTPS, and then enter ::/0 in the Source field.
+279. Choose Add another rule. If you're launching a Linux instance, choose SSH for Type, or if you're launching a Windows instance, choose RDP. 
+280. Enter your network's public IPv6 address range in the Source field.
+281.  If you don't know this address range, you can use ::/0 for this exercise.
+282. Step 3: Launch an instance
+283. When you launch an EC2 instance into a VPC, you must specify the subnet in which to launch the instance.
+284. In this case, you'll launch an instance into the public subnet of the VPC you created.
+285. Use the Amazon EC2 launch wizard in the Amazon EC2 console to launch your instance.
+286. To ensure that your instance is accessible from the internet, assign an IPv6 address from the subnet range to the instance during launch. 
+287. This ensures that your instance can communicate with the internet over IPv6.
+288. To launch an EC2 instance into a VPC
+289. Before you launch the EC2 instance into the VPC, configure the subnet of the VPC to automatically assign IPv6 IP addresses. 
+290. Open the Amazon EC2 console at https://console.aws.amazon.com/ec2/
+291. In the navigation bar, on the top-right, ensure that you select the same Region in which you created your VPC and security group.
+292. From the dashboard, choose Launch Instance.
+293. On the first page of the wizard, choose the AMI to use.
+294. For this exercise, we recommend that you choose an Amazon Linux AMI or a Windows AMI.
+295. On the Choose an Instance Type page, you can select the hardware configuration and size of the instance to launch.
+296. By default, the wizard selects the first available instance type based on the AMI that you selected. 
+297.  You can leave the default selection and choose Next: Configure Instance Details.
+298. On the Configure Instance Details page, select the VPC that you created from the Network list and the subnet from the Subnet list.
+299. For Auto-assign IPv6 IP, choose Enable.
+300. Leave the rest of the default settings, and go through the next pages of the wizard until you get to the Add Tags page.
+301. On the Add Tags page, you can tag your instance with a Name tag; for example Name=MyWebServer. 
+302. This helps you to identify your instance in the Amazon EC2 console after you've launched it. 
+303. Choose Next: Configure Security Group when you are done.
+304. On the Configure Security Group page, the wizard automatically defines the launch-wizard-x security group to allow you to connect to your instance.
+305. Instead, choose the Select an existing security group option, select the WebServerSG group that you created previously, and then choose Review and Launch.
+306. On the Review Instance Launch page, check the details of your instance and choose Launch.
+307. In the Select an existing key pair or create a new key pair dialog box, you can choose an existing key pair, or create a new one. 
+308. If you create a new key pair, ensure that you download the file and store it in a secure location.
+309.  You need the contents of the private key to connect to your instance after it's launched.
+310. To launch your instance, select the acknowledgment check box and choose Launch Instances.
+311. On the confirmation page, choose View Instances to view your instance on the Instances page
+312. Select your instance, and view its details in the Description tab.
+313. The Private IPs field displays the private IPv4 address that's assigned to your instance from the range of IPv4 addresses in your subnet. 
+314.  The IPv6 IPs field displays the IPv6 address that's assigned to your instance from the range of IPv6 addresses in your subnet.
+315. You can connect to your instance through its IPv6 address using SSH or Remote Desktop from your home network.
+316. Your local computer must have an IPv6 address and must be configured to use IPv6. 
+317. You can use the following examples to create and configure your VPCs.
+318. Create an IPv4 VPC and subnets using the AWS CLI
+319. Use the AWS CLI to create a VPC with a public subnet and a private subnet.
+320. Create an IPv6 VPC and subnets using the AWS CLI:
+321. Use the AWS CLI to create a VPC with an associated IPv6 CIDR block and a public subnet and a private subnet, each with an associated IPv6 CIDR block.
+322. Share public subnets and private subnets:
+323. Share private and public subnets with accounts.
+324. Services using AWS PrivateLink and VPC peering:
+325. Use a combination of VPC peering and AWS PrivateLink to extend access to private services to consumers.
+326. Middlebox routing:
+327. Configure fine-grain control over the routing path of traffic entering or leaving your VPC.
+328. You can also use a transit gateway to connect your VPCs.
+329. Centralized router: Configure your transit gateway as a centralized router that connects all of your VPCs, AWS Direct Connect, and AWS Site-to-Site VPN connections.
+330. Isolated VPCs: Configure your transit gateway as multiple isolated routers.
+331. This is similar to using multiple transit gateways, but provides more flexibility in cases where the routes and attachments might change.
+332. Isolated VPCs with shared services: Configure your transit gateway as multiple isolated routers that use a shared service. 
+333. This is similar to using multiple transit gateways, but provides more flexibility in cases where the routes and attachments might change.
+334. You can connect your Amazon VPC to remote networks and users using the following VPN connectivity options.
+335. AWS Site-to-Site VPN: You can create an IPsec VPN connection between your VPC and your remote network.
+336. On the AWS side of the Site-to-Site VPN connection, a virtual private gateway or transit gateway provides two VPN endpoints (tunnels) for automatic failover. 
+337.  You configure your customer gateway device on the remote side of the Site-to-Site VPN connection. 
+338. AWS Client VPN: AWS Client VPN	AWS Client VPN is a managed client-based VPN service that enables you to securely access your AWS resources or your on-premises network.
+339. AWS VPN CloudHub: If you have more than one remote network (for example, multiple branch offices), you can create multiple AWS Site-to-Site VPN connections via your virtual private gateway to enable communication between these networks.
+340. Third party software VPN appliance: You can create a VPN connection to your remote network by using an Amazon EC2 instance in your VPC that's running a third party software VPN appliance. 
+341. AWS does not provide or maintain third party software VPN appliances; however, you can choose from a range of products provided by partners and open source communities
+342. You can also use AWS Direct Connect to create a dedicated private connection from a remote network to your VPC.
+343. You can combine this connection with an AWS Site-to-Site VPN to create an IPsec-encrypted connection. 
+
+Auto Scaling groups
+
+344. An Auto Scaling group contains a collection of Amazon EC2 instances that are treated as a logical grouping for the purposes of automatic scaling and management.
+345. An Auto Scaling group also enables you to use Amazon EC2 Auto Scaling features such as health check replacements and scaling policies. 
+346. Both maintaining the number of instances in an Auto Scaling group and automatic scaling are the core functionality of the Amazon EC2 Auto Scaling service.
+347. The size of an Auto Scaling group depends on the number of instances that you set as the desired capacity. 
+348. You can adjust its size to meet demand, either manually or by using automatic scaling.
+349. An Auto Scaling group starts by launching enough instances to meet its desired capacity.
+350. It maintains this number of instances by performing periodic health checks on the instances in the group.
+351. The Auto Scaling group continues to maintain a fixed number of instances even if an instance becomes unhealthy.
+352. If an instance becomes unhealthy, the group terminates the unhealthy instance and launches another instance to replace it. 
+353. You can use scaling policies to increase or decrease the number of instances in your group dynamically to meet changing conditions.
+354.  When the scaling policy is in effect, the Auto Scaling group adjusts the desired capacity of the group, between the minimum and maximum capacity values that you specify, and launches or terminates the instances as needed. 
+355. You can also scale on a schedule. 
+356. An Auto Scaling group can launch On-Demand Instances, Spot Instances, or both.
+357.  You can specify multiple purchase options for your Auto Scaling group only when you configure the group to use a launch template. 
+358. Spot Instances provide you with access to unused Amazon EC2 capacity at steep discounts relative to On-Demand prices.
+359. There are key differences between Spot Instances and On-Demand Instances:
+360. The price for Spot Instances varies based on demand
+361. Amazon EC2 can terminate an individual Spot Instance as the availability of, or price for, Spot Instances changes
+362. When a Spot Instance is terminated, the Auto Scaling group attempts to launch a replacement instance to maintain the desired capacity for the group.
+363. When instances are launched, if you specified multiple Availability Zones, the desired capacity is distributed across these Availability Zones.
+364. If a scaling action occurs, Amazon EC2 Auto Scaling automatically maintains balance across all of the Availability Zones that you specify.
+365. If you're new to Auto Scaling groups, start by creating a launch template or a launch configuration and then use it to create an Auto Scaling group in which all instances have the same instance attributes.
+366. You can set the following instance attributes by specifying them as part of the launch template or launch configuration: AMI, block devices, key pair, instance type, security groups, user data, EC2 instance monitoring, instance profile, kernel, ramdisk, the tenancy of the instance, whether the instance has a public IP address, and whether the instance is EBS-optimized.
+367. The Getting started with Amazon EC2 Auto Scaling tutorial provides a quick introduction to the various building blocks that are used in Amazon EC2 Auto Scaling.
+368. Adding Amazon EC2 Auto Scaling to your application architecture is one way to maximize the benefits of the AWS Cloud.
+369. When you use Amazon EC2 Auto Scaling, your applications gain the following benefits:
+370. Better fault tolerance. Amazon EC2 Auto Scaling can detect when an instance is unhealthy, terminate it, and launch an instance to replace it. 
+371. You can also configure Amazon EC2 Auto Scaling to use multiple Availability Zones. 
+372. If one Availability Zone becomes unavailable, Amazon EC2 Auto Scaling can launch instances in another one to compensate.
+373. Better availability. Amazon EC2 Auto Scaling helps ensure that your application always has the right amount of capacity to handle the current traffic demand.
+374. Better cost management. Amazon EC2 Auto Scaling can dynamically increase and decrease capacity as needed. 
+375. Because you pay for the EC2 instances you use, you save money by launching instances when they are needed and terminating them when they aren't.
+376. To demonstrate some of the benefits of Amazon EC2 Auto Scaling, consider a basic web application running on AWS.
+377. This application allows employees to search for conference rooms that they might want to use for meetings.
+378.  During the beginning and end of the week, usage of this application is minimal. 
+379.  During the middle of the week, more employees are scheduling meetings, so the demand on the application increases significantly.
+380. Traditionally, there are two ways to plan for these changes in capacity. 
+381. The first option is to add enough servers so that the application always has enough capacity to meet demand. 
+382. The downside of this option, however, is that there are days in which the application doesn't need this much capacity.
+383. The extra capacity remains unused and, in essence, raises the cost of keeping the application running.
+384. The second option is to have enough capacity to handle the average demand on the application.
+385.  This option is less expensive, because you aren't purchasing equipment that you'll only use occasionally. 
+386.  However, you risk creating a poor customer experience when the demand on the application exceeds its capacity.
+387. By adding Amazon EC2 Auto Scaling to this application, you have a third option available.
+388.  You can add new instances to the application only when necessary, and terminate them when they're no longer needed. 
+389.  You can add new instances to the application only when necessary, and terminate them when they're no longer needed. 
+390.  You now have a cost-effective architecture that provides the best customer experience while minimizing expenses.
+391. AWS resources, such as EC2 instances, are housed in highly available data centers. 
+392. To provide additional scalability and reliability, these data centers are in different physical locations.
+393. Regions are large and widely dispersed geographic locations. 
+394. Each Region contains multiple distinct locations, called Availability Zones, which are engineered to be isolated from failures in other Availability Zones. 
+395. They provide inexpensive, low-latency network connectivity to other Availability Zones in the same Region.
+394. Amazon EC2 Auto Scaling enables you to take advantage of the safety and reliability of geographic redundancy by spanning Auto Scaling groups across multiple Availability Zones within a Region. 
+395. When one Availability Zone becomes unhealthy or unavailable, Auto Scaling launches new instances in an unaffected Availability Zone.
+396. When the unhealthy Availability Zone returns to a healthy state, Auto Scaling automatically redistributes the application instances evenly across all of the designated Availability Zones.
+397. An Auto Scaling group can contain EC2 instances in one or more Availability Zones within the same Region.
+398.  However, Auto Scaling groups cannot span multiple Regions.
+399. For Auto Scaling groups in a VPC, the EC2 instances are launched in subnets. 
+400.  You select the subnets for your EC2 instances when you create or update the Auto Scaling group.
+401. You can select one or more subnets per Availability Zone.
+402. Amazon EC2 Auto Scaling attempts to distribute instances evenly between the Availability Zones that are enabled for your Auto Scaling group. 
+403. Amazon EC2 Auto Scaling does this by attempting to launch new instances in the Availability Zone with the fewest instances.
+404. If the attempt fails, however, Amazon EC2 Auto Scaling attempts to launch the instances in another Availability Zone until it succeeds. 
+405. For Auto Scaling groups in a VPC, if there are multiple subnets in an Availability Zone, Amazon EC2 Auto Scaling selects a subnet from the Availability Zone at random.
+406. Amazon EC2 Auto Scaling helps you ensure that you have the correct number of Amazon EC2 instances available to handle the load for your application. 
+407. You create collections of EC2 instances, called Auto Scaling groups.
+408. You can specify the minimum number of instances in each Auto Scaling group, and Amazon EC2 Auto Scaling ensures that your group never goes below this size. 
+409. You can specify the maximum number of instances in each Auto Scaling group, and Amazon EC2 Auto Scaling ensures that your group never goes above this size.
+410.  If you specify the desired capacity, either when you create the group or at any time thereafter, Amazon EC2 Auto Scaling ensures that your group has this many instances. 
+411. If you specify scaling policies, then Amazon EC2 Auto Scaling can launch or terminate instances as demand on your application increases or decreases.
+412. The following table describes the key components of Amazon EC2 Auto Scaling.
+413. Groups: Your EC2 instances are organized into groups so that they can be treated as a logical unit for the purposes of scaling and management. When you create a group, you can specify its minimum, maximum, and, desired number of EC2 instances.
+414. Configuration templates: Your group uses a launch template, or a launch configuration (not recommended, offers fewer features), as a configuration template for its EC2 instances. You can specify information such as the AMI ID, instance type, key pair, security groups, and block device mapping for your instances
+415. Scaling options: Amazon EC2 Auto Scaling provides several ways for you to scale your Auto Scaling groups.
+416. Accessing Amazon EC2 Auto Scaling:
+417. If you've signed up for an Amazon Web Services account, you can access Amazon EC2 Auto Scaling by signing into the AWS Management Console, choosing EC2 from the console home page, and then choosing Auto Scaling Groups from the navigation pane.
+418. You can also access Amazon EC2 Auto Scaling using the Amazon EC2 Auto Scaling API.
+419. Amazon EC2 Auto Scaling provides a Query API.
+420. These requests are HTTP or HTTPS requests that use the HTTP verbs GET or POST and a Query parameter named Action
+421. If you prefer to build applications using language-specific APIs instead of submitting a request over HTTP or HTTPS, AWS provides libraries, sample code, tutorials, and other resources for software developers. 
+422. These libraries provide basic functions that automate tasks such as cryptographically signing your requests, retrying requests, and handling error responses, making it is easier for you to get started. 
+423. If you prefer to use a command line interface, you have the following options:
+424. AWS Command Line Interface (CLI):
+425. Provides commands for a broad set of AWS products, and is supported on Windows, macOS, and Linux. 
+426. AWS Tools for Windows PowerShell
+427. Provides commands for a broad set of AWS products for those who script in the PowerShell environment.
+428. Pricing for Amazon EC2 Auto Scaling:
+429. There are no additional fees with Amazon EC2 Auto Scaling, so it's easy to try it out and see how it can benefit your AWS architecture.
+430. You only pay for the AWS resources (for example, EC2 instances, EBS volumes, and CloudWatch alarms) that you use.
+431. To automatically distribute incoming application traffic across multiple instances in your Auto Scaling group, use Elastic Load Balancing.
+432. To monitor basic statistics for your instances and Amazon EBS volumes, use Amazon CloudWatch. 
+433. Adding Amazon EC2 Auto Scaling to your application architecture is one way to maximize the benefits of the AWS Cloud. 
+434. When you use Amazon EC2 Auto Scaling, your applications gain the following benefits:
+435. Better fault tolerance
+436. Amazon EC2 Auto Scaling can detect when an instance is unhealthy, terminate it, and launch an instance to replace it.
+437. You can also configure Amazon EC2 Auto Scaling to use multiple Availability Zones.
+438.  If one Availability Zone becomes unavailable, Amazon EC2 Auto Scaling can launch instances in another one to compensate.
+439. Better availability
+440. Amazon EC2 Auto Scaling helps ensure that your application always has the right amount of capacity to handle the current traffic demand.
+441. Better cost management
+442. Amazon EC2 Auto Scaling can dynamically increase and decrease capacity as needed.
+443. you pay for the EC2 instances you use, you save money by launching instances when they are needed and terminating them when they aren't.
+444. Amazon EC2 Auto Scaling attempts to distribute instances evenly between the Availability Zones that are enabled for your Auto Scaling group.
+445. Amazon EC2 Auto Scaling does this by attempting to launch new instances in the Availability Zone with the fewest instances. 
+446. If the attempt fails, however, Amazon EC2 Auto Scaling attempts to launch the instances in another Availability Zone until it succeeds. 
+447.  For Auto Scaling groups in a VPC, if there are multiple subnets in an Availability Zone, Amazon EC2 Auto Scaling selects a subnet from the Availability Zone at random.
+448. The EC2 instances in an Auto Scaling group have a path, or lifecycle, that differs from that of other EC2 instances. 
+449. The lifecycle starts when the Auto Scaling group launches an instance and puts it into service.
+450. The lifecycle ends when you terminate the instance, or the Auto Scaling group takes the instance out of service and terminates it.
+451. The following illustration shows the transitions between instance states in the Amazon EC2 Auto Scaling lifecycle.
+452. Scale out: The following scale-out events direct the Auto Scaling group to launch EC2 instances and attach them to the group:\
+453. You manually increase the size of the group. 
+454. You create a scaling policy to automatically increase the size of the group based on a specified increase in demand.
+455. You set up scaling by schedule to increase the size of the group at a specific time.
+456. When a scale-out event occurs, the Auto Scaling group launches the required number of EC2 instances, using its assigned launch configuration. 
+457. These instances start in the Pending state. 
+458. If you add a lifecycle hook to your Auto Scaling group, you can perform a custom action here.
+459. When each instance is fully configured and passes the Amazon EC2 health checks, it is attached to the Auto Scaling group and it enters the InService state. 
+460. The instance is counted against the desired capacity of the Auto Scaling group.
+461. Instances in service: Instances remain in the InService state until one of the following occurs:
+462. A scale-in event occurs, and Amazon EC2 Auto Scaling chooses to terminate this instance in order to reduce the size of the Auto Scaling group.
+463. You put the instance into a Standby state. For more information, see Enter and exit standby.
+464. You detach the instance from the Auto Scaling group.
+465. The instance fails a required number of health checks, so it is removed from the Auto Scaling group, terminated, and replaced. 
+466. Scale in: The following scale-in events direct the Auto Scaling group to detach EC2 instances from the group and terminate them:
+467. You manually decrease the size of the group. 
+468. You create a scaling policy to automatically decrease the size of the group based on a specified decrease in demand. 
+469. You set up scaling by schedule to decrease the size of the group at a specific time. 
+470. It is important that you create a corresponding scale-in event for each scale-out event that you create.
+471. This helps ensure that the resources assigned to your application match the demand for those resources as closely as possible.
+472. When a scale-in event occurs, the Auto Scaling group terminates one or more instances. 
+473. The Auto Scaling group uses its termination policy to determine which instances to terminate.
+474.  Instances that are in the process of terminating from the Auto Scaling group and shutting down enter the Terminating state, and can't be put back into service.
+475. If you add a lifecycle hook to your Auto Scaling group, you can perform a custom action here. 
+476. Finally, the instances are completely terminated and enter the Terminated state.
+477. Attach an instance: You can attach a running EC2 instance that meets certain criteria to your Auto Scaling group. 
+478. After the instance is attached, it is managed as part of the Auto Scaling group.
+479. Detach an instance: You can detach an instance from your Auto Scaling group.
+480. After the instance is detached, you can manage it separately from the Auto Scaling group or attach it to a different Auto Scaling group.
+481. Lifecycle hooks: You can add a lifecycle hook to your Auto Scaling group so that you can perform custom actions when instances launch or terminate.
+482. When Amazon EC2 Auto Scaling responds to a scale-out event, it launches one or more instances.
+483. These instances start in the Pending state.
+484. If you added an autoscaling:EC2_INSTANCE_LAUNCHING lifecycle hook to your Auto Scaling group, the instances move from the Pending state to the Pending:Wait state.
+485. After you complete the lifecycle action, the instances enter the Pending:Proceed state. 
+486. When the instances are fully configured, they are attached to the Auto Scaling group and they enter the InService state.
+487. When Amazon EC2 Auto Scaling responds to a scale-in event, it terminates one or more instances.
+488. These instances are detached from the Auto Scaling group and enter the Terminating state. 
+489. If you added an autoscaling:EC2_INSTANCE_TERMINATING lifecycle hook to your Auto Scaling group, the instances move from the Terminating state to the Terminating:Wait state.
+490. After you complete the lifecycle action, the instances enter the Terminating:Proceed state. 
+491. When the instances are fully terminated, they enter the Terminated state.
+492. Enter and exit standby: You can put any instance that is in an InService state into a Standby state.
+493. This enables you to remove the instance from service, troubleshoot or make changes to it, and then put it back into service.
+494. Instances in a Standby state continue to be managed by the Auto Scaling group.
+495. However, they are not an active part of your application until you put them back into service.
+496. Default Amazon EC2 Auto Scaling service quotas:
+497. Launch configurations per Region: 200
+498. Auto Scaling groups per Region: 200
+499. Auto Scaling group quotas
+500. Scaling policies per Auto Scaling group: 50
+501. Scheduled actions per Auto Scaling group: 125
+502. Lifecycle hooks per Auto Scaling group: 50
+503. SNS topics per Auto Scaling group: 10
+504. Classic Load Balancers per Auto Scaling group: 50
+505. Target groups per Auto Scaling group: 50
+506. Scaling policy quotas: Step adjustments per scaling policy: 20
