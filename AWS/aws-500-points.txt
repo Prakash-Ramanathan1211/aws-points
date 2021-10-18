@@ -510,3 +510,218 @@ Auto Scaling groups
 504. Classic Load Balancers per Auto Scaling group: 50
 505. Target groups per Auto Scaling group: 50
 506. Scaling policy quotas: Step adjustments per scaling policy: 20
+
+Spot Instances
+507. A Spot Instance is an instance that uses spare EC2 capacity that is available for less than the On-Demand price.
+508. Because Spot Instances enable you to request unused EC2 instances at steep discounts, you can lower your Amazon EC2 costs significantly. 
+509. The hourly price for a Spot Instance is called a Spot price. 
+510. The Spot price of each instance type in each Availability Zone is set by Amazon EC2, and is adjusted gradually based on the long-term supply of and demand for Spot Instances. 
+511. Your Spot Instance runs whenever capacity is available and the maximum price per hour for your request exceeds the Spot price
+512. Spot Instances are a cost-effective choice if you can be flexible about when your applications run and if your applications can be interrupted. 
+513. For example, Spot Instances are well-suited for data analysis, batch jobs, background processing, and optional tasks.
+514. Spot capacity pool – A set of unused EC2 instances with the same instance type (for example, m5.large) and Availability Zone.
+515. Spot price – The current price of a Spot Instance per hour.
+516. Spot Instance request – Requests a Spot Instance. The request provides the maximum price per hour that you are willing to pay for a Spot Instance.
+517. If you don't specify a maximum price, the default maximum price is the On-Demand price. 
+518. When the maximum price per hour for your request exceeds the Spot price, Amazon EC2 fulfills your request if capacity is available.
+519.  A Spot Instance request is either one-time or persistent.
+520. Amazon EC2 automatically resubmits a persistent Spot Instance request after the Spot Instance associated with the request is terminated.
+521. EC2 instance rebalance recommendation - Amazon EC2 emits an instance rebalance recommendation signal to notify you that a Spot Instance is at an elevated risk of interruption. 
+522.  This signal gives you the opportunity to proactively rebalance your workloads across existing or new Spot Instances without having to wait for the two-minute Spot Instance interruption notice.
+523. Spot Instance interruption – Amazon EC2 terminates, stops, or hibernates your Spot Instance when Amazon EC2 needs the capacity back or the Spot price exceeds the maximum price for your request.
+524. Amazon EC2 provides a Spot Instance interruption notice, which gives the instance a two-minute warning before it is interrupted.
+525. Key differences between Spot Instances and On-Demand Instances
+526. Launch time on Spot instances: Can only be launched immediately if the Spot Instance request is active and capacity is available.
+527. Launch time On-Dmand instances: Can only be launched immediately if you make a manual launch request and capacity is available.
+528. Available capacity on Spot instances: If capacity is not available, the Spot Instance request continues to automatically make the launch request until capacity becomes available.
+529. Available capacity On-Demand Instances: If capacity is not available when you make a launch request, you get an insufficient capacity error (ICE).
+530. Hourly price on Spot instances: The hourly price for Spot Instances varies based on demand.
+531. Hourly price On-Demand instances: The hourly price for On-Demand Instances is static.
+532. Rebalance recommendation on Spot instances: The signal that Amazon EC2 emits for a running Spot Instance when the instance is at an elevated risk of interruption.
+533. Rebalance recommendation On-Demand instances: You determine when an On-Demand Instance is interrupted (stopped, hibernated, or terminated).
+534. Instance interruption on Spot instances: You can stop and start an Amazon EBS-backed Spot Instance. In addition, the Amazon EC2 Spot service can interrupt an individual Spot Instance if capacity is no longer available, the Spot price exceeds your maximum price, or demand for Spot Instances increases.
+535. Instance interruption On-Demand instances: You determine when an On-Demand Instance is interrupted (stopped, hibernated, or terminated).
+    
+     Strategies for using Spot Instances:
+536. One strategy is to maintain a minimum level of guaranteed compute resources for your applications by launching a core group of On-Demand Instances, and supplementing them with Spot Instances when the opportunity arises.
+
+537. The first thing you need to do is get set up to use Amazon EC2. It can also be helpful to have experience launching On-Demand Instances before launching Spot Instances.
+     How Spot Instances work?
+538. To launch a Spot Instance, either you create a Spot Instance request, or Amazon EC2 creates a Spot Instance request on your behalf.
+539. The Spot Instance launches when the Spot Instance request is fulfilled.
+540. The Spot Instance request must include the maximum price that you're willing to pay per hour per instance. If you don't specify a price, the price defaults to the On-Demand price.
+541. The request can include other constraints such as the instance type and Availability Zone.
+542. Your Spot Instance launches if the maximum price that you're willing to pay exceeds the Spot price, and if there is available capacity.
+543. If the maximum price you're willing to pay is lower than the Spot price, then your instance does not launch. 
+544. However, because Amazon EC2 gradually adjusts the Spot price based on the long-term supply of and demand for Spot Instances, the maximum price you're willing to pay might eventually exceed the Spot price, in which case your instance will launch.
+545. Your Spot Instance runs until you stop or terminate it, or until Amazon EC2 interrupts it (known as a Spot Instance interruption).
+546. When you use Spot Instances, you must be prepared for interruptions
+547. Amazon EC2 can interrupt your Spot Instance when the demand for Spot Instances rises, when the supply of Spot Instances decreases, or when the Spot price exceeds your maximum price. 
+548. When Amazon EC2 interrupts a Spot Instance, it provides a Spot Instance interruption notice, which gives the instance a two-minute warning before Amazon EC2 interrupts it.
+549. You can stop, start, reboot, or terminate an Amazon EBS-backed Spot Instance. The Spot service can stop, terminate, or hibernate a Spot Instance when it interrupts it.
+550. Specify a launch group in your Spot Instance request to tell Amazon EC2 to launch a set of Spot Instances only if it can launch them all. In addition, if the Spot service must terminate one of the instances in a launch group (for example, if the Spot price exceeds your maximum price), it must terminate them all.
+551. However, if you terminate one or more of the instances in a launch group, Amazon EC2 does not terminate the remaining instances in the launch group.
+552. Although this option can be useful, adding this constraint can decrease the chances that your Spot Instance request is fulfilled and increase the chances that your Spot Instances are terminated.
+553. For example, your launch group includes instances in multiple Availability Zones. If capacity in one of these Availability Zones decreases and is no longer available, then Amazon EC2 terminates all instances for the launch group.
+554. If you create another successful Spot Instance request that specifies the same (existing) launch group as an earlier successful request, then the new instances are added to the launch group.
+555. Subsequently, if an instance in this launch group is terminated, all instances in the launch group are terminated, which includes instances launched by the first and second requests.
+556. Specify an Availability Zone group in your Spot Instance request to tell the Spot service to launch a set of Spot Instances in the same Availability Zone. 
+557. Amazon EC2 need not interrupt all instances in an Availability Zone group at the same time. If Amazon EC2 must interrupt one of the instances in an Availability Zone group, the others remain running.
+558. Although this option can be useful, adding this constraint can lower the chances that your Spot Instance request is fulfilled.
+559. If you specify an Availability Zone group but don't specify an Availability Zone in the Spot Instance request, the result depends on the network you specified.
+560. Amazon EC2 uses the Availability Zone for the specified subnet. If you don't specify a subnet, it selects an Availability Zone and its default subnet, but not necessarily the lowest-priced zone. 
+561. If you deleted the default subnet for an Availability Zone, then you must specify a different subnet.
+562. You specify a subnet for your Spot Instances the same way that you specify a subnet for your On-Demand Instances.
+563. You should use the default maximum price (the On-Demand price), or base your maximum price on the Spot price history of Spot Instances in a VPC.
+564. [Default VPC] If you want your Spot Instance launched in a specific low-priced Availability Zone, you must specify the corresponding subnet in your Spot Instance request. If you do not specify a subnet, Amazon EC2 selects one for you, and the Availability Zone for this subnet might not have the lowest Spot price.
+565. [Nondefault VPC] You must specify the subnet for your Spot Instance.
+
+Amazon Simple Notification Service (SNS)
+566. Amazon Simple Notification Service (Amazon SNS) is a fully managed messaging service for both application-to-application (A2A) and application-to-person (A2P) communication.
+567. The A2A pub/sub functionality provides topics for high-throughput, push-based, many-to-many messaging between distributed systems, microservices, and event-driven serverless applications.
+568. Using Amazon SNS topics, your publisher systems can fanout messages to a large number of subscriber systems including Amazon SQS queues, AWS Lambda functions and HTTPS endpoints, for parallel processing, and Amazon Kinesis Data Firehose. The A2P functionality enables you to send messages to users at scale via SMS, mobile push, and email.
+569. Amazon SNS enables you to modernize your applications and decouple them into smaller, independent components that are easier to develop, deploy, and maintain. 
+570. Leveraging a pub/sub event-driven architecture for your application improves performance, reliability, and allows each component to scale independently.
+571. Amazon SNS enables you to send messages or notifications directly to users with SMS text messages to over 200 countries, mobile push on Apple, Android, and other platforms or email (SMTP). 
+572. Amazon SNS provides redundancy across multiple SMS providers and allows you to push mobile notifications using a single endpoint for all platforms.
+573. Amazon SNS uses a number of strategies that work together to provide message durability.
+574. To start, published messages are stored across multiple, geographically-separated servers and data centers.
+575. If a subscribed endpoint isn't available, Amazon SNS executes a message delivery retry policy. 
+576.  To preserve any messages that aren't delivered before the delivery retry policy ends, you can create a dead-letter queue. 
+577. You can also subscribe Amazon Kinesis Data Firehose delivery streams to SNS topics, which allows messages to be sent to durable endpoints such as Amazon S3 buckets or Amazon Redshift tables.
+578. Amazon SNS leverages the proven AWS cloud to dynamically scale with your application. Amazon SNS is a fully managed service, taking care of the heavy lifting related to capacity planning, provisioning, monitoring, and patching.
+579.  The service is designed to handle high-throughput, bursty traffic patterns and enables you to send millions of messages per second.
+580. Amazon SNS FIFO topics work with Amazon SQS FIFO queues to ensure messages are delivered in a strictly ordered manner and are only processed once (deduplicated). 
+581.  This enables you to maintain consistency when processing transactions across a single or multiple independent services where it’s critical that messages are in the correct order.
+582.  It also allows you to offload the effort of writing custom code for ordering and message deduplication.
+583. Amazon SNS helps you simplify your pub/sub messaging architecture by offloading the message filtering logic from your subscriber systems, and message routing logic from your publisher systems. 
+584.  With Amazon SNS message filtering, subscribing endpoints receive only the messages of interest, instead of all messages published to the topic.
+585. Amazon CloudWatch gives visibility into your filtering activity, and AWS CloudFormation allows you to deploy subscription filter policies in an automated and secure manner.
+586. Amazon Simple Notification Service (Amazon SNS) is a managed service that provides message delivery from publishers to subscribers (also known as producers and consumers). Publishers communicate asynchronously with subscribers by sending messages to a topic, which is a logical access point and communication channel. 
+587. Clients can subscribe to the SNS topic and receive published messages using a supported endpoint type, such as Amazon Kinesis Data Firehose, Amazon SQS, AWS Lambda, HTTP, email, mobile push notifications, and mobile text messages (SMS).
+588. Application-to-application messaging
+
+Application-to-application messaging supports subscribers such as Amazon Kinesis Data Firehose delivery streams, Lambda functions, Amazon SQS queues, HTTP/S endpoints, and AWS Event Fork Pipelines. 
+
+589. Application-to-person notifications
+
+Application-to-person notifications provide user notifications to subscribers such as mobile applications, mobile phone numbers, and email addresses. 
+
+590. Standard and FIFO topics
+
+Use a FIFO topic to ensure strict message ordering, to define message groups, and to prevent message duplication. Only Amazon SQS FIFO queues can subscribe to a FIFO topic.
+591. Use a standard topic when message delivery order and possible message duplication are not critical. All of the supported delivery protocols can subscribe to a standard topic.
+592. Message durability
+
+Amazon SNS uses a number of strategies that work together to provide message durability:
+
+Published messages are stored across multiple, geographically separated servers and data centers.
+
+If a subscribed endpoint isn't available, Amazon SNS runs a delivery retry policy.
+
+To preserve any messages that aren't delivered before the delivery retry policy ends, you can create a dead-letter queue.
+
+593. Message archiving and analytics
+
+You can subscribe Kinesis Data Firehose delivery streams to SNS topics, which allow you to send notifications to additional archiving and analytics endpoints such as Amazon Simple Storage Service (Amazon S3) buckets, Amazon Redshift tables, and more.
+
+594. Message attributes
+
+Message attributes let you provide any arbitrary metadata about the message. Amazon SNS message attributes.
+
+595. Message filtering
+
+By default, each subscriber receives every message published to the topic. To receive a subset of the messages, a subscriber must assign a filter policy to the topic subscription. When the incoming message attributes match the filter policy attributes, the message is delivered to the subscribed endpoint. Otherwise, the message is filtered out. For more information, see Amazon SNS message filtering.
+
+596. Message security
+
+Server-side encryption protects the contents of messages that are stored in Amazon SNS topics, using encryption keys provided by AWS KMS.
+597. You can also establish a private connection between Amazon SNS and your virtual private cloud (VPC).
+
+598. The Fanout scenario is when a message published to an SNS topic is replicated and pushed to multiple endpoints, such as Kinesis Data Firehose delivery streams, Amazon SQS queues, HTTP(S) endpoints, and Lambda functions. This allows for parallel asynchronous processing.
+599. For example, you can develop an application that publishes a message to an SNS topic whenever an order is placed for a product. Then, SQS queues that are subscribed to the SNS topic receive identical notifications for the new order.
+600. An Amazon Elastic Compute Cloud (Amazon EC2) server instance attached to one of the SQS queues can handle the processing or fulfillment of the order. And you can attach another Amazon EC2 server instance to a data warehouse for analysis of all orders received.
+601. You can also use fanout to replicate data sent to your production environment with your test environment. Expanding upon the previous example, you can subscribe another SQS queue to the same SNS topic for new incoming orders. Then, by attaching this new SQS queue to your test environment, you can continue to improve and test your application using data received from your production environment.
+602. Application and system alerts are notifications that are triggered by predefined thresholds. Amazon SNS can send these notifications to specified users via SMS and email.
+603.  For example, you can receive immediate notification when an event occurs, such as a specific change to your Amazon EC2 Auto Scaling group, a new file uploaded to an Amazon S3 bucket, or a metric threshold breached in Amazon CloudWatch. 
+604. Amazon SNS can send push email messages and text messages (SMS messages) to individuals or groups. For example, you could send e-commerce order confirmations as user notifications. 
+605. Mobile push notifications enable you to send messages directly to mobile apps. For example, you can use Amazon SNS to send update notifications to an app. The notification message can include a link to download and install the update.
+
+Amazon Simple Queue Service (SQS)
+
+606. Amazon Simple Queue Service (SQS) is a fully managed message queuing service that enables you to decouple and scale microservices, distributed systems, and serverless applications.
+607. SQS eliminates the complexity and overhead associated with managing and operating message-oriented middleware, and empowers developers to focus on differentiating work. 
+608. Using SQS, you can send, store, and receive messages between software components at any volume, without losing messages or requiring other services to be available. 
+609.  Get started with SQS in minutes using the AWS console, Command Line Interface or SDK of your choice, and three simple commands.
+610. SQS offers two types of message queues. Standard queues offer maximum throughput, best-effort ordering, and at-least-once delivery. SQS FIFO queues are designed to guarantee that messages are processed exactly once, in the exact order that they are sent.
+611. AWS manages all ongoing operations and underlying infrastructure needed to provide a highly available and scalable message queuing service. 
+612.  With SQS, there is no upfront cost, no need to acquire, install, and configure messaging software, and no time-consuming build-out and maintenance of supporting infrastructure. 
+613. SQS queues are dynamically created and scale automatically so you can build and grow applications quickly and efficiently.
+614. Use Amazon SQS to transmit any volume of data, at any level of throughput, without losing messages or requiring other services to be available. 
+615.  SQS lets you decouple application components so that they run and fail independently, increasing the overall fault tolerance of the system. Multiple copies of every message are stored redundantly across multiple availability zones so that they are available whenever needed.
+616. You can use Amazon SQS to exchange sensitive data between applications using server-side encryption (SSE) to encrypt each message body. 
+617. Amazon SQS SSE integration with AWS Key Management Service (KMS) allows you to centrally manage the keys that protect SQS messages along with keys that protect your other AWS resources. 
+618. AWS KMS logs every use of your encryption keys to AWS CloudTrail to help meet your regulatory and compliance needs.
+619. Amazon SQS leverages the AWS cloud to dynamically scale based on demand. SQS scales elastically with your application so you don’t have to worry about capacity planning and pre-provisioning. 
+620. There is no limit to the number of messages per queue, and standard queues provide nearly unlimited throughput. Costs are based on usage which provides significant cost saving versus the “always-on” model of self-managed messaging middleware.
+621. Amazon Simple Queue Service (Amazon SQS) offers a secure, durable, and available hosted queue that lets you integrate and decouple distributed software systems and components.
+622. Amazon SQS offers common constructs such as dead-letter queues and cost allocation tags. It provides a generic web services API that you can access using any programming language that the AWS SDK supports.
+
+623. Security – You control who can send messages to and receive messages from an Amazon SQS queue.
+
+Server-side encryption (SSE) lets you transmit sensitive data by protecting the contents of messages in queues using keys managed in AWS Key Management Service (AWS KMS)
+
+624. Durability – For the safety of your messages, Amazon SQS stores them on multiple servers. Standard queues support at-least-once message delivery, and FIFO queues support exactly-once message processing.
+
+625. Availability – Amazon SQS uses redundant infrastructure to provide highly-concurrent access to messages and high availability for producing and consuming messages.
+
+626. Scalability – Amazon SQS can process each buffered request independently, scaling transparently to handle any load increases or spikes without any provisioning instructions.
+
+627. Reliability – Amazon SQS locks your messages during processing, so that multiple producers can send and multiple consumers can receive messages at the same time
+
+628. Customization – Your queues don't have to be exactly alike—for example, you can set a default delay on a queue. You can store the contents of messages larger than 256 KB using Amazon Simple Storage Service (Amazon S3) or Amazon DynamoDB, with Amazon SQS holding a pointer to the Amazon S3 object, or you can split a large message into smaller messages.
+
+629. Amazon SQS and Amazon SNS are queue and topic services that are highly scalable, simple to use, and don't require you to set up message brokers. We recommend these services for new applications that can benefit from nearly unlimited scalability and simple APIs.
+630. Amazon MQ is a managed message broker service that provides compatibility with many popular message brokers. We recommend Amazon MQ for migrating applications from existing message brokers that rely on compatibility with APIs such as JMS or protocols such as AMQP, MQTT, OpenWire, and STOMP.
+631. There are three main parts in a distributed messaging system: the components of your distributed system, your queue (distributed on Amazon SQS servers), and the messages in the queue.
+632. Amazon SQS offers standard as the default queue type. Standard queues support a nearly unlimited number of API calls per second, per API action (SendMessage, ReceiveMessage, or DeleteMessage). Standard queues support at-least-once message delivery.
+633. However, occasionally (because of the highly distributed architecture that allows nearly unlimited throughput), more than one copy of a message might be delivered out of order. Standard queues provide best-effort ordering which ensures that messages are generally delivered in the same order as they're sent.
+634. You can use standard message queues in many scenarios, as long as your application can process messages that arrive more than once and out of order, for example:
+Decouple live user requests from intensive background work – Let users upload media while resizing or encoding it.
+
+Allocate tasks to multiple worker nodes – Process a high number of credit card validation requests.
+
+Batch messages for future processing – Schedule multiple entries to be added to a database.
+
+635. A standard queue makes a best effort to preserve the order of messages, but more than one copy of a message might be delivered out of order. If your system requires that order be preserved, we recommend using a FIFO (First-In-First-Out) queue or adding sequencing information in each message so you can reorder the messages when they're received.
+636. Amazon SQS stores copies of your messages on multiple servers for redundancy and high availability. On rare occasions, one of the servers that stores a copy of a message might be unavailable when you receive or delete a message.
+637. If this occurs, the copy of the message isn't deleted on that unavailable server, and you might get that message copy again when you receive messages. Design your applications to be idempotent (they should not be affected adversely when processing the same message more than once).
+
+638. FIFO (First-In-First-Out) queues are designed to enhance messaging between applications when the order of operations and events is critical, or where duplicates can't be tolerated. Examples of situations where you might use FIFO queues include the following:
+
+To make sure that user-entered commands are run in the right order.
+
+To display the correct product price by sending price modifications in the right order.
+
+To prevent a student from enrolling in a course before registering for an account.
+
+639. FIFO queues also provide exactly-once processing but have a limited number of transactions per second (TPS).
+640. When you create a new queue, you must specify a queue name unique for your AWS account and region. Amazon SQS assigns each queue you create an identifier called a queue URL that includes the queue name and other Amazon SQS components. Whenever you want to perform an action on a queue, you provide its queue URL.
+641. The name of a FIFO queue must end with the .fifo suffix. The suffix counts towards the 80-character queue name quota. To determine whether a queue is FIFO, you can check whether the queue name ends with the suffix.
+642. Each message receives a system-assigned message ID that Amazon SQS returns to you in the SendMessage response. This identifier is useful for identifying messages. (However, to delete a message you need the message's receipt handle.) The maximum length of a message ID is 100 characters.
+643. Every time you receive a message from a queue, you receive a receipt handle for that message. This handle is associated with the action of receiving the message, not with the message itself. 
+644. To delete the message or to change the message visibility, you must provide the receipt handle (not the message ID). Thus, you must always receive a message before you can delete it (you can't put a message into the queue and then recall it). The maximum length of a receipt handle is 1,024 characters.
+645. The token used for deduplication of sent messages. If a message with a particular message deduplication ID is sent successfully, any messages sent with the same message deduplication ID are accepted successfully but aren't delivered during the 5-minute deduplication interval.
+646. The tag that specifies that a message belongs to a specific message group. Messages that belong to the same message group are always processed one by one, in a strict order relative to the message group (however, messages that belong to different message groups might be processed out of order).
+647. Sequence number
+The large, non-consecutive number that Amazon SQS assigns to each message.
+648. Temporary queues help you save development time and deployment costs when using common message patterns such as request-response. You can use the Temporary Queue Client to create high-throughput, cost-effective, application-managed temporary queues.
+649. The client maps multiple temporary queues—application-managed queues created on demand for a particular process—onto a single Amazon SQS queue automatically. This allows your application to make fewer API calls and have a higher throughput when the traffic to each temporary queue is low. 
+650. When a temporary queue is no longer in use, the client cleans up the temporary queue automatically, even if some processes that use the client aren't shut down cleanly.
+651. The following are the benefits of temporary queues:
+
+They serve as lightweight communication channels for specific threads or processes.
+
+They can be created and deleted without incurring additional cost.
+
+They are API-compatible with static (normal) Amazon SQS queues. This means that existing code that sends and receives messages can send messages to and receive messages from virtual queues.
